@@ -43,7 +43,7 @@ def getPictureCoords(fix):
 def fixListFromCodeList(fixes, codes):
     subsetFixes = []
     for code in codes:
-        subsetFixes = findFixByCode(fixes, code)
+        subsetFixes.append(findFixByCode(fixes, code))
     return subsetFixes
 
 
@@ -95,18 +95,32 @@ def readAirportsFromFile(filename, fixes):
                 if airport.distanceTo(nav) <= 0.25:
                     airport.addNeighbor(nav)
 
-def plotFixesToGraph(fixes, ax, color):
-    if ()
+def plotPathToGraph(fixes, ax):
+    color = 'green'
+    for i in range(len(fixes)-1):
+         fix1 = fixes[i]
+         fix2 = fixes[i+1]
+         coords1 = getPictureCoords(fix1)
+         coords2 = getPictureCoords(fix2)
+         ax.plot(coords1[0], coords1[1], marker='o', color=color, markersize=10)
+         ax.plot(coords2[0], coords2[1], marker='o', color=color, markersize=10)
+         ax.plot([coords1[0], coords2[0]], [coords1[1], coords2[1]], color=color, linewidth=5)
+
+
+
+def plotFixesToGraph(fixes, ax):
     for i in fixes:
         coords = getPictureCoords(i)
         for j in i.neighbors:
             ncoords = getPictureCoords(j)
-            ax.plot([coords[0], ncoords[0]], [coords[1], ncoords[1]], 'r-')
+            color = windAsColor(i.latitude,i.longitude);
+            ax.plot([coords[0], ncoords[0]], [coords[1], ncoords[1]], color=color, linewidth=0.5)
         if i.isAirport:
             ax.plot(coords[0], coords[1], marker='o', color='blue', markersize=10)
             ax.text(coords[0],coords[1], i.code)
         else:
-            ax.plot(coords[0], coords[1], marker='o', color=windAsColor(i.latitude,i.longitude), markersize=5)
+            color = windAsColor(i.latitude,i.longitude);
+            ax.plot(coords[0], coords[1], marker='o', color=color, markersize=5)
 
 def windAsComplex(direction, speed):
     rDir = math.radians(90-direction)
@@ -116,7 +130,7 @@ def windAsComplex(direction, speed):
     return complex(windX, windY)
 
 # For pretty map
-def windAsColor(latitude, longitude, altitude=3000):
+def windAsColor(latitude, longitude, altitude=9000):
     direction, speed, temp = wx.getWindData(latitude, longitude, altitude)
     hue = direction / 360
     r,g,b = colorsys.hsv_to_rgb(hue, 1, 1)

@@ -176,9 +176,14 @@ def main():
             if choice == 1:
                 path = greedy_best_first_search(start, goal)
                 pathFixes = pts.fixListFromCodeList(fixes, path)
+                pts.plotPathToGraph(pathFixes, ax)
+                plt.show()
                 
             else:
                 path = a_star_search(start, goal)
+                pathFixes = pts.fixListFromCodeList(fixes, path)
+                pts.plotPathToGraph(pathFixes, ax)
+                plt.show()
         else:
             print("Invalid choice.")
 
