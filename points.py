@@ -40,6 +40,13 @@ def getPictureCoords(fix):
     longcoord= height * (long-longcorner)/longsize
     return (longcoord, latcoord)
 
+def fixListFromCodeList(fixes, codes):
+    subsetFixes = []
+    for code in codes:
+        subsetFixes = findFixByCode(fixes, code)
+    return subsetFixes
+
+
 def findFixByCode(fixes, code):
     for i in range(len(fixes)):
         if fixes[i].code == code:
@@ -88,7 +95,8 @@ def readAirportsFromFile(filename, fixes):
                 if airport.distanceTo(nav) <= 0.25:
                     airport.addNeighbor(nav)
 
-def plotFixesToGraph(fixes, ax):
+def plotFixesToGraph(fixes, ax, color):
+    if ()
     for i in fixes:
         coords = getPictureCoords(i)
         for j in i.neighbors:
@@ -131,25 +139,3 @@ def heuristic(fix1, fix2, altitude):
     print(wind)
     result = intended - wind
     print(result)
-
-# Main Program
-print("Fetching weather info from AviationWeather.gov...")
-wx.populateWindData()
-print("Fetched.")
-fixes = readFixesFromFile("fixes.txt")
-readAirportsFromFile("airports.txt", fixes)
-fig, ax = plt.subplots()
-
-# Plot the Florida map
-img = plt.imread("florida.png")
-ax.imshow(img)
-# Plot all the fixes
-plotFixesToGraph(fixes,ax)
-
-# Get weather info
-
-heuristic(findFixByCode(fixes, "KDAB"), findFixByCode(fixes, "KMLB"), 3000)
-
-# Tada
-plt.show()
-

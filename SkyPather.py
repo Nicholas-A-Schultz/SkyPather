@@ -1,5 +1,5 @@
 import heapq
-
+import matplotlib.pyplot as plt
 import weatherapi as wx
 import points as pts
 
@@ -75,7 +75,7 @@ def greedy_best_first_search(start, goal, altitude=3000):
 
             print("Path:", " -> ".join(path))
             print("Cost:", round(cost, 2))
-            return
+            return path
 
         # Add neighbors to priority queue
         for neighbor in current.neighbors:
@@ -115,7 +115,7 @@ def a_star_search(start, goal, altitude=3000):
 
             print("Path:", " -> ".join(path))
             print("Cost:", round(g_cost[current], 2))
-            return
+            return path
 
         # Relax edges
         for neighbor in current.neighbors:
@@ -136,6 +136,13 @@ def a_star_search(start, goal, altitude=3000):
 
 def main():
     fixes = build_graph()
+    fig, ax = plt.subplots()
+
+    # Plot the Florida map
+    img = plt.imread("florida.png")
+    ax.imshow(img)
+    # Plot all the fixes
+    pts.plotFixesToGraph(fixes,ax)
 
     while True:
         print("\nAvailable nodes:")
@@ -167,11 +174,15 @@ def main():
                 continue
 
             if choice == 1:
-                greedy_best_first_search(start, goal)
+                path = greedy_best_first_search(start, goal)
+                pathFixes = pts.fixListFromCodeList(fixes, path)
+                
             else:
-                a_star_search(start, goal)
+                path = a_star_search(start, goal)
         else:
             print("Invalid choice.")
+
+
 
 
 if __name__ == "__main__":
