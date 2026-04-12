@@ -2,6 +2,12 @@
 
 SkyPather is a Python flight pathfinding program that finds routes between Florida aviation fixes and airports using weather-aware search algorithms. It uses real wind data from AviationWeather.gov and graph data from external point files to calculate and display routes on a map of Florida.
 
+## Team Members
+Nicholas Schultz - GitHub: https://github.com/Nicholas-A-Schultz
+Alessandro Gaggioli - GitHub: https://github.com/AleDenshi
+Sebastian Osick - Github: https://github.com/CashyO
+Sophia Piro - GitHub: N/A
+
 ## Features
 
 - Uses **Greedy Best-First Search**
@@ -28,6 +34,22 @@ The program:
    - **Greedy Best-First Search**
    - **A\* Search**
 5. Plots the resulting route on a map of Florida
+
+## How to Run
+
+1. Open a terminal in the project folder.
+2. Run the program:
+   - python SkyPather.py
+3. When the program starts, it will:
+   - fetch weather data
+   - load airport and fix data
+   - display the Florida map
+   - let you choose a search method:
+     - 1 for Greedy Best-First Search
+     - 2 for A* Search
+     - 3 to Exit
+4. Enter a valid start node and goal node when prompted.
+5. The program will print the path and cost, then plot the route on the map.
 
 ## Files Required
 
